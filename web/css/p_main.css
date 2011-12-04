@@ -1,0 +1,120 @@
+html,body{
+	margin:0;
+	padding:0;
+	line-height:1.4em;
+	text-align:center;
+}
+img{
+	border:none;
+}
+a:visited {
+color:#333333;
+font-family:'굴림 ',Gulim,AppleGothic,sans-serif;
+font-size:12px;
+text-decoration:none;
+}
+a:hover, a:active {
+color:#333333;
+font-family:'굴림',Gulim,AppleGothic,sans-serif;
+font-size:12px;
+text-decoration:underline;
+}
+
+div{
+border:0 none;
+color:#000000;
+font-family:'굴림',Dotum,AppleGothic,sans-serif;
+font-size:12px;
+margin:0;
+padding:0;
+}
+
+div.ssjs-search-bar {
+background:url("../images/y_img_search_bar.gif") no-repeat scroll 0 0 transparent;
+display:inline;
+float:left;
+height:35px;
+margin-right:4px;
+position:relative;
+width:382px;
+z-index:100;
+}
+
+.ssjs-search {
+background-color:transparent;
+border:0 none;
+color:#000000;
+display:inline;
+float:left;
+font:bold 16px AppleGothic,"돋움",dotum;
+height:21px;
+margin:4px;
+outline:medium none;
+padding:3px 0 3px 9px;
+width:340px;
+}
+
+input, select {
+vertical-align:middle;
+}
+
+.ssjs-suggest {
+background:url("../images/y_bt_suggest2.gif") no-repeat scroll 0 0 transparent;
+border:0 none;
+cursor:pointer;
+display:block;
+height:21px;
+left:363px;
+position:absolute;
+text-indent:-3000em;
+top:7px;
+width:19px;
+}
+
+.ssjs-main{
+	height:300px;
+	padding-top:150px;
+}
+
+.ssjs-search-bar-box{
+	height:36px;
+	margin:0 auto;
+	padding-left:59px;
+	position:relative;
+	width:432px;
+}
+
+.ssjs-search-btn{
+	background:url("../images/y_btn_search_web.gif") no-repeat scroll 0 0 transparent;
+	border:medium none;
+	cursor:pointer;
+	display:inline;
+	float:left;
+	height:35px;
+	text-indent:-9999in;
+	vertical-align:top;
+	width:46px;
+}
+
+.ssjs-logo{
+	width:210px;
+	padding-left:110px;
+	height:auto;
+	overflow:hidden;
+	position:relative;
+	margin:0 auto 16px;
+}
+#m32Logo{
+	background:url("../images/m32logo.png") no-repeat scroll 0 0 transparent;
+	display:inline;
+	float:left;
+	height:25px;
+	margin-left:7px;
+	overflow:hidden;
+	text-indent:-9999in;
+	width:48px;
+}
+#daumLogo{
+	display:inline;
+	float:left;
+}

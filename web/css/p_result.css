@@ -1,0 +1,49 @@
+a {
+	text-decoration: none;
+}
+
+a img {
+	border: 0 none;
+}
+.ssjs-result-area {
+	padding: 10px;
+}
+
+.ssjs-maps {
+	width: 300px;
+	height: 150px;
+	margin-right:20px;
+	float:left;
+}
+.ssjs-map-area{
+	padding:10px;
+	border:2px solid #D6D6D6;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin-bottom:10px;
+}
+.ssjs-map-area ul{
+	display:inline-block;
+	float:left;
+	padding:0 0 0 20px;
+}
+.ssjs-map-area li{
+	padding:5px 0;
+	font-size:13px;
+}
+.ssjs-search-info{
+	padding:3px;
+	text-align:center;
+	font-size:14px;
+	border:2px solid #B569AA;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin-bottom:20px;
+}
+.ssjs-search-info p{
+	padding:5px 0;
+}
+a{
+	color:#0066FF;
+	font-weight:bold;
+}

@@ -1,0 +1,144 @@
+html, body {
+    font: normal 12px tahoma, arial, verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    height: 100%;
+    width: 100%;
+		line-height:1.4em;
+}
+img{
+	border:none;
+}
+div,p{
+	margin:0;
+	padding:0;
+}
+img{
+	border:none;
+}
+a:visited {
+color:#333333;
+font-family:'굴림 ',Gulim,AppleGothic,sans-serif;
+font-size:12px;
+text-decoration:none;
+}
+a:hover, a:active {
+color:#333333;
+font-family:'굴림',Gulim,AppleGothic,sans-serif;
+font-size:12px;
+text-decoration:underline;
+}
+
+div{
+border:0 none;
+color:#000000;
+font-family:'굴림',Dotum,AppleGothic,sans-serif;
+font-size:12px;
+margin:0;
+padding:0;
+}
+.ssjs-map-box,
+.ssjs-map-info-box{
+	float:left;
+	padding:2px;
+	border:2px solid #5D76F3;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin-right:5px;
+	height:700px;
+	width:590px;
+}
+.ssjs-map-info-box{
+	padding:5px;
+	height:694px;
+	width:280px;
+}
+ul{
+	padding:5px 0 0 20px;
+}
+
+#topWrap {
+	padding-bottom: 9px;
+}
+
+#daumHeader {
+	display: inline;
+	float: left;
+	margin: 17px 15px 19px 17px;
+}
+
+#daumLogo {
+	display: inline;
+	float: left;
+	border: 0px;
+}
+
+#m32Logo {
+	background: url("../images/m32logo.png") no-repeat scroll 0 0 transparent;
+	display: inline;
+	float: left;
+	height: 25px;
+	margin-left: 7px;
+	overflow: hidden;
+	text-indent: -9999px;
+	width: 48px;
+}
+
+#search .searchbar {
+	position: relative;
+	z-index: 99999;
+}
+
+#search .searchbar {
+	background: url("../images/o_bg_search.png") no-repeat scroll 0 0 transparent;
+	display: inline;
+	float: left;
+	height: 31px;
+	margin: 13px 6px 0 0;
+	width: 289px;
+}
+
+#search input.search {
+	background-color: transparent;
+	border: 0 none;
+	color: #000000;
+	display: inline;
+	float: left;
+	font: 12px / 1.5 dotum, sans-serif;
+	height: 18px;
+	margin: 4px;
+	outline: medium none;
+	padding: 3px 4px;
+	vertical-align: middle;
+	width: 260px;
+}
+
+#daumNoSuggest {
+	background: url("../images/o_not_suggest.gif") no-repeat scroll 0 0 transparent;
+	border: medium none;
+	display: inline;
+	float: left;
+	height: 17px;
+	margin: 7px -3px 0 0;
+	position: relative;
+	width: 16px;
+}
+
+#daumBtnSearch {
+	background: url("../images/o_btnsearch.gif") no-repeat scroll 0 0 transparent;
+	height: 31px;
+	margin-right: 3px;
+	width: 39px;
+	border: medium none;
+	cursor: pointer;
+	display: inline;
+	margin-top: 13px;
+	overflow: hidden;
+	text-indent: -9999in;
+	vertical-align: top;
+}
+#wrap {
+	margin: 0;
+	width: 978px;
+}

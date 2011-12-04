@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="mapLocation">
+
+    <typeAlias alias="mapLocation" type="springsprout.m31.domain.MapLocation" />
+    <typeAlias alias="keyWord" type="springsprout.m31.domain.MapLocationKeyWord" />
+    <typeAlias alias="roadView" type="springsprout.m31.domain.RoadView" />
+
+    <resultMap id="mapLocationById" class="springsprout.m31.domain.MapLocation">
+        <result property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="startPhotoX" column="startPhotoX" />
+        <result property="startPhotoY" column="startPhotoY" />
+        <result property="endPhotoX" column="endPhotoX" />
+        <result property="endPhotoY" column="endPhotoY" />
+        <result property="endPlace" column="endPlace" />
+        <result property="startPlace" column="startPlace" />
+        <result property="addr" column="addr" />
+        <result property="viewCount" column="viewCount" />
+        <result property="regDate" column="regDate" />
+        <result property="description" column="description" />
+        <result property="keyWords" column="id" select="mapLocation.keyWordByMapId" />
+        <result property="roadViews" column="id" select="mapLocation.roadViewByMapId" />
+    </resultMap>
+
+    <resultMap id="mapLocation" class="springsprout.m31.domain.MapLocation" groupBy="id">
+        <result property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="startPhotoX" column="startPhotoX" />
+        <result property="startPhotoY" column="startPhotoY" />
+        <result property="endPhotoX" column="endPhotoX" />
+        <result property="endPhotoY" column="endPhotoY" />
+        <result property="endPlace" column="endPlace" />
+        <result property="startPlace" column="startPlace" />
+        <result property="addr" column="addr" />
+        <result property="viewCount" column="viewCount" />
+        <result property="description" column="description" />
+        <result property="regDate" column="regDate" />
+        <result property="keyWords" resultMap="mapLocation.keyWordbyMapId" />
+    </resultMap>
+
+    <resultMap id="keyWordbyMapId" class="springsprout.m31.domain.MapLocationKeyWord">
+        <result property="id" column="kWid" />
+        <result property="mapId" column="kWmapId" />
+        <result property="keyWord" column="kWkeyWord" />
+    </resultMap>
+
+    <resultMap id="roadView" class="springsprout.m31.domain.RoadView">
+        <result property="mapId" column="rVmapId" />
+        <result property="seq" column="rVseq" />
+        <result property="photoX" column="rVphotoX" />
+        <result property="photoY" column="rVphotoY" />
+        <result property="panoId" column="rVpanoId" />
+        <result property="pan" column="rVpan" />
+        <result property="tilt" column="rVtilt" />
+        <result property="zoom" column="rVzoom" />
+    </resultMap>
+
+    <select id="all" parameterClass="string" resultMap="mapLocation"><![CDATA[
+        SELECT ml.id, ml.title, ml.addr, ml.startPhotoX, ml.startPhotoY, ml.endPhotoX, ml.endPhotoY, ml.viewCount, ml.regDate
+               ,kw.id as kWid, kw.mapId as kWmapId, kw.keyWord kWkeyWord,ml.startPlace,ml.endPlace,ml.description
+          FROM m31.MapLocation ml
+          LEFT OUTER JOIN m31.MapLocationKeyWord kw ON ml.id = kw.mapId
+    ]]></select>
+
+    <select id="byId" parameterClass="int" resultMap="mapLocationById">
+        SELECT ml.id, ml.title, ml.addr, ml.startPhotoX, ml.startPhotoY, ml.endPhotoX, ml.endPhotoY,ml.viewCount, ml.regDate,ml.startPlace,ml.endPlace,ml.description
+          FROM m31.MapLocation ml
+         WHERE id = #value#
+    </select>
+
+    <select id="keyWordByMapId" parameterClass="int" resultClass="springsprout.m31.domain.MapLocationKeyWord">
+        SELECT id, mapId, keyWord
+          FROM m31.MapLocationKeyWord
+         WHERE mapId = #value#
+    </select>
+
+    <select id="roadViewByMapId" parameterClass="int" resultClass="springsprout.m31.domain.RoadView">
+        SELECT mapId, seq, photoX, photoY, panoId, pan, tilt, zoom
+          FROM m31.RoadView
+         WHERE mapId = #value#
+    </select>
+
+    <select id="byKeyWord" parameterClass="string" resultMap="mapLocation"><![CDATA[
+        SELECT ml.id, ml.title, ml.addr, ml.startPhotoX, ml.startPhotoY, ml.endPhotoX, ml.endPhotoY, ml.viewCount, ml.regDate
+               ,kw.id as kWid, kw.mapId as kWmapId, kw.keyWord kWkeyWord,ml.startPlace,ml.endPlace,ml.description
+          FROM m31.MapLocation ml
+          LEFT OUTER JOIN m31.MapLocationKeyWord kw ON ml.id = kw.mapId
+         WHERE ml.startPlace LIKE CONCAT('%', #value# ,'%')
+          or ml.addr LIKE CONCAT('%', #value# ,'%')
+          or ml.endPlace LIKE CONCAT('%', #value# ,'%')
+          or kw.keyWord LIKE CONCAT('%', #value# ,'%')
+          or ml.title LIKE CONCAT('%', #value# ,'%')
+          group by ml.id
+    ]]></select>
+
+    <insert id="saveMapLocation" parameterClass="springsprout.m31.domain.MapLocation">
+        INSERT INTO m31.MapLocation(title, addr, startPhotoX, startPhotoY, endPhotoX, endPhotoY, regDate,startPlace,endPlace,description)
+        VALUES (#title#, #addr#, #startPhotoX#, #startPhotoY#, #endPhotoX#, #endPhotoY#, DATE_FORMAT(SYSDATE(), '%Y%m%d'),#startPlace#,#endPlace#,#description#)
+        <selectKey keyProperty="id" resultClass="int">  
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateMapLocation" parameterClass="mapLocation">
+        UPDATE m31.MapLocation
+           SET startPhotoX = #startPhotoX#, startPhotoY = #startPhotoY#
+              ,endPhotoX = #endPhotoX#, endPhotoY = #endPhotoY#
+              ,addr = #addr#
+              ,title = #title#
+         WHERE id = #id#
+    </update>
+
+    <update id="mapLocationViewCountAdd" parameterClass="int">
+        UPDATE m31.MapLocation
+           SET viewCount = viewCount + 1
+         WHERE id = #value#
+    </update>
+
+    <delete id="deleteMapLocationById" parameterClass="int">
+        DELETE FROM m31.MapLocation WHERE id = #value#
+    </delete>
+
+    <insert id="saveKeyWord" parameterClass="keyWord">
+        INSERT INTO m31.MapLocationKeyWord (mapId, keyWord)
+        VALUES (#mapId#, #keyWord#)
+    </insert>
+
+    <update id="updateKeyWord" parameterClass="keyWord">
+        UPDATE m31.MapLocationKeyWord
+           SET mapId = mapId , keyWord = #keyWord#
+         WHERE id = #id#
+    </update>
+
+    <delete id="deleteKeyWordByMapId" parameterClass="int">
+        DELETE FROM m31.MapLocationKeyWord WHERE mapId = #value#
+    </delete>
+
+    <insert id="saveRoadView" parameterClass="roadView">
+        INSERT INTO m31.RoadView (mapId, seq, photoX, photoY, panoId, pan, tilt, zoom)
+        VALUES (#mapId#, #seq#, #photoX#, #photoY#, #panoId#, #pan#, #tilt#, #zoom#)
+    </insert>
+
+    <delete id="deleteRoadViewByMapId" parameterClass="int">
+        DELETE FROM m31.RoadView WHERE mapId = #value#        
+    </delete>
+
+</sqlMap>

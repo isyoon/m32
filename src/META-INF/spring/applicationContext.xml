@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- ============================================================= -->
+	<!--  Properties                                                   -->
+	<!-- ============================================================= -->
+    <util:properties id="dbPr" location="classpath:/META-INF/database.properties" />
+
+    <context:component-scan base-package="springsprout.m31">
+		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+	</context:component-scan>
+
+ 	<!-- ============================================================= -->
+	<!--  DataAccess                                                   -->
+	<!-- ============================================================= -->
+	<bean id="dataSource"
+          class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	  	  p:driverClass="#{dbPr['database.driverClassName']}"
+          p:jdbcUrl="#{dbPr['database.url']}"
+          p:user="#{dbPr['database.username']}"
+	      p:password="#{dbPr['database.password']}" />
+
+	<!-- ============================================================= -->
+	<!--  Transaction                                                  -->
+	<!-- ============================================================= -->
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		  p:dataSource-ref="dataSource" />
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
+    <!-- ============================================================= -->
+	<!--  iBatis                                                       -->
+	<!-- ============================================================= -->
+	<bean id="sqlMapClient"
+		  class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"
+		  p:configLocation="classpath:META-INF/ibatis/sqlMapConfig.xml"
+		  p:dataSource-ref="dataSource" />
+
+	<bean id="sqlMapClientTemplate"
+		  class="org.springframework.orm.ibatis.SqlMapClientTemplate"
+		  p:sqlMapClient-ref="sqlMapClient" />
+
+</beans>

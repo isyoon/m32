@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+				"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>daum & 메멘토</title>
+	<link rel="stylesheet" type="text/css" href="/css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/p_record.css"/>
+	<link rel="shortcuticon" href="/favicon.ico" type="image/x-icon"/>
+	<!-- LIBS -->
+	<script type="text/javascript" src="/js/jquery-1.4.2.js"></script>
+	<script type="text/javascript" src="/js/tag.js"></script>
+	<script type="text/javascript" src="/js/jquery.json.js"></script>
+	<script type="text/javascript"
+					src="http://apis.daum.net/maps/maps2.js?apikey=7f51fa50e4e59eb1d52a61c17cadf263288d9663"></script>
+</head>
+<body id="body">
+<div class="ssjs-record">
+	<div class="ssjs-record-box">
+		<!-- 지도 -->
+		<div class="ssjs-map-box">
+			<div id="daummap"></div>
+			<div id="roadview" class="roadview"></div>
+		</div>
+		<div class="ssjs-map-info-box">
+
+			<div class="ssjs-title-label">로드뷰 녹화 정보</div>
+			<form action="/save" method="post" name="roadForm" id="roadForm">
+				<p>
+					<span class="label">제목</span>
+					<input type="text" name="title" value=""/>
+				</p>
+
+				<p>
+
+					<span class="label">출발지</span>
+					<input type="text" name="startPlace" value="대림역"/>
+				</p>
+
+				<p>
+					<span class="label">도착지</span>
+					<input type="text" name="endPlace" value="대림역"/>
+				</p>
+
+				<p>
+					<span class="label">주소</span>
+					구로구 구로동
+					<input type="hidden" name="addr" value="구로구 구로동"/>
+				</p>
+
+				<p>
+					<span class="label v-top">설명</span>
+
+					<textarea name="desc"></textarea>
+				</p>
+
+				<p>
+					<span class="label">태그</span>
+					<input class="tagger" type="text" name="tags"/>
+				</p>
+
+				<input type="hidden" name="startPhotoX" value="37.494188782175684"/>
+
+				<input type="hidden" name="startPhotoY" value="126.89432823549978"/>
+				<input type="hidden" name="endPhotoX" value="37.495593585378764"/>
+				<input type="hidden" name="endPhotoY" value="126.88954963346333"/>
+				<input type="hidden" name="keyWords" value=""/>
+				<input type="hidden" name="roadViews" value=""/>
+			</form>
+			<input type="button" value="save" id="save"/>
+		</div>
+		<div style="clear:both;"></div>
+
+	</div>
+</div>
+<script type="text/javascript">
+	var ssjsRecordConfig = {
+		mapW :600,
+		mapH :300
+	};
+	var SsjsRecord = function() {
+		var _self = this;
+		this.roadViewDatas = [];
+		this.isStartRecord = false;
+		this.roadViewDatas.last = function() {
+			return this[this.length - 1];
+		};
+		_self.roadViewDatas.last = function() {
+			return this[this.length - 1];
+		};
+		var startLatLng = new DLatLng(37.49763886500607, 127.0265481038671);
+
+		var rmap = new DMap("daummap", {width:ssjsRecordConfig.mapW,height:ssjsRecordConfig.mapH,point:startLatLng});//로드뷰 지도 생성
+		//            var rvo = new DRoadViewOverlay(rmap); //로드뷰 오버레이 생성
+		var zoomControl = new DZoomControl();
+		rmap.addControl(zoomControl);
+		zoomControl.setVAlign("middle");
+
+		var opt = {width:ssjsRecordConfig.mapW,height:ssjsRecordConfig.mapH,point:startLatLng};
+		var rv = new DRoadView("roadview", opt); //로드뷰 생성
+		var rvc = new DRoadViewClient(); //로드뷰 클라이언트 생성
+
+		var rmark = new DMark(startLatLng); //로드뷰 마크
+		rmap.addOverlay(new DMark(new DLatLng(37.49763886500607, 127.0265481038671), {'mark':new DIcon("/images/mark.png", new DSize(31, 35))}));
+		rmap.addOverlay(rmark);
+		DEvent.addListener(rv, "complete", function() {
+			addRecord(startLatLng);
+		});
+
+		DEvent.addListener(rv, "move", function(latlng) {
+			rmap.setCenter(latlng);
+			addRecord(latlng);
+		});
+
+		DEvent.addListener(rv, "changeddirection", function(addtion) { // 지도 클릭이벤트
+			_self.roadViewDatas.last().pan = addtion.pan + '';
+			_self.roadViewDatas.last().tilt = addtion.tilt + '';
+			_self.roadViewDatas.last().zoom = addtion.zoom + '';
+		});
+		var addRecord = function(latlng) {
+			var lastRoadViewData = _self.roadViewDatas.last();
+			if (lastRoadViewData) {
+				drawLine(new DLatLng(lastRoadViewData.photoX, lastRoadViewData.photoY), latlng);
+			}
+			_self.roadViewDatas.push({
+				'seq'	 : _self.roadViewDatas.length,
+				'photoX': latlng.y + '',
+				'photoY': latlng.x + '',
+				'panoId': rv.getPanoId() + '',
+				'pan': rv.getPan() + '',
+				'tilt': rv.getTilt() + '',
+				'zoom': rv.getZoom() + ''
+			});
+		};
+		var drawLine = function(sLatLng, eLatLng) {
+			rmap.addOverlay(new DLine(sLatLng, eLatLng));
+		};
+		this.save = function() {
+			var tags = [];
+			$('input[name=roadViews]').val($.JSON.encode(_self.roadViewDatas));
+
+			$('input[name=tags]').each(function(idx, element) {
+				tags.push({
+					'keyWord':element.value
+				});
+			});
+			$('input[name=keyWords]').val($.JSON.encode(tags));
+			$('#roadForm').submit();
+		};
+	}
+
+	$(document).ready(function() {
+		var ssjsRecord = new SsjsRecord();
+		$('#save').click(ssjsRecord.save);
+	});
+</script>
+
+</body>
+</html>

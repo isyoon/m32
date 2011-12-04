@@ -1,0 +1,99 @@
+img{
+	border:none;
+}
+a:visited {
+color:#333333;
+font-family:'굴림 ',Gulim,AppleGothic,sans-serif;
+font-size:12px;
+text-decoration:none;
+}
+a:hover, a:active {
+color:#333333;
+font-family:'굴림',Gulim,AppleGothic,sans-serif;
+font-size:12px;
+text-decoration:underline;
+}
+
+div{
+border:0 none;
+color:#000000;
+font-family:'굴림',Dotum,AppleGothic,sans-serif;
+font-size:12px;
+margin:0;
+padding:0;
+}
+
+div.ssjs-search-bar {
+background:url("../images/y_img_search_bar_min.gif") no-repeat scroll 0 0 transparent;
+display:inline;
+float:left;
+height:35px;
+margin-right:5px;
+position:relative;
+width:200px;
+z-index:100;
+}
+
+.ssjs-search {
+background-color:transparent;
+border:0 none;
+color:#000000;
+display:inline;
+float:left;
+font:bold 16px AppleGothic,"돋움",dotum;
+height:21px;
+margin:4px;
+outline:medium none;
+padding:3px 0 3px 9px;
+width:170px;
+}
+
+input, select {
+vertical-align:middle;
+}
+
+.ssjs-suggest {
+background:url("../images/y_bt_suggest2.gif") no-repeat scroll 0 0 transparent;
+border:0 none;
+cursor:pointer;
+display:block;
+height:21px;
+left:185px;
+position:absolute;
+text-indent:-3000em;
+top:7px;
+width:19px;
+}
+
+.ssjs-regedit{
+	height:100%;
+	width:987px;
+}
+
+.ssjs-search-bar-box{
+	padding-left:10px;
+}
+
+.ssjs-search-btn{
+	background:url("../images/y_btn_search_web.gif") no-repeat scroll 0 0 transparent;
+	border:medium none;
+	cursor:pointer;
+	display:inline;
+	float:left;
+	height:35px;
+	text-indent:-9999in;
+	vertical-align:top;
+	width:46px;
+}
+.ssjs-search-label{
+	font-size:17px;
+	height:25px;
+}
+
+.r {
+    cursor: pointer;
+}
+
+#search-result {
+    height: 460px;
+}

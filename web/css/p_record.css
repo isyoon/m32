@@ -1,0 +1,52 @@
+.ssjs-record{
+	width:987px;
+}
+.ssjs-title-label{
+	font-size:17px;
+	height:25px;
+	text-align:center;
+	padding-top:10px;
+}
+.ssjs-record-box{
+	padding-left:10px;
+}
+p{
+	padding:5px 0;
+	font-size:13px;
+}
+.label{
+	margin-right:5px;
+	width:40px;
+	display:inline-block;
+}
+input,textarea{
+	width:210px;
+	padding:2px 0 2px 3px;
+	height:20px;
+}
+textarea{
+	height:100px;
+}
+.v-top{
+	vertical-align:top;
+}
+.tagList{
+	height:120px;
+	overflow-y:auto;
+	width:198px;
+	border:1px solid #E2E2E2;
+	margin-left:49px;
+}
+.remove-tag{
+	cursor:pointer;
+	font-weight:bold;
+	color:red;
+	display:inline-block;
+	float:right;
+	padding-left:3px;
+	margin-right:10px;
+}
+#save{
+	width:60px;
+	padding:0;
+}
